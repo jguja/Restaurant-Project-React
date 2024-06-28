@@ -4,8 +4,12 @@
     "\\obj",
     "\\obj\\Debug",
     "\\public",
-    "\\src"
+    "\\src",
+    "\\src\\assets",
+    "\\src\\restaurant",
+    "\\src\\restaurant\\components",
+    "\\src\\restaurant\\components\\menu",
+    "\\src\\restaurant\\components\\webLayout"
   ],
-  "SelectedNode": "\\restaurant.client.esproj",
   "PreviewInSolutionExplorer": false
 }
