@@ -1,0 +1,4 @@
+C:\Users\julia\OneDrive\Pulpit\TIU\Restaurant\restaurant.client\obj\Debug\restaurant.client.esproj.CoreCompileInputs.cache
+C:\Users\Teban\Documents\things\juliaproyectos\testRestaurantuniversity\restaurant.client\obj\Debug\restaurant.client.esproj.CoreCompileInputs.cache
+C:\Users\julia\OneDrive\Pulpit\TIU\gitTest\testRestaurantuniversity\restaurant.client\obj\Debug\restaurant.client.esproj.CoreCompileInputs.cache
+C:\Users\julia\OneDrive\Pulpit\TIU\testRestaurantuniversity\restaurant.client\obj\Debug\restaurant.client.esproj.CoreCompileInputs.cache

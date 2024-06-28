@@ -1,0 +1,60 @@
+.home-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100%;
+}
+
+.top-image {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle-content {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.left-content, .right-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.hours-location {
+    text-align: left;
+}
+
+    .hours-location h3, .hours-location h4 {
+        margin: 10px 0;
+    }
+
+    .hours-location p {
+        margin: 5px 0;
+    }
+
+.right-content .restaurant-description {
+    text-align: left;
+}
+
+    .right-content .restaurant-description p {
+        margin: 10px 0;
+    }
+
+.bottom-map {
+    grid-row: 3;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+    .bottom-map iframe {
+        width: 97%;
+        height: 100%;
+        border: 0;
+    }
+

@@ -1,0 +1,56 @@
+.btn-custom {
+    background-color: rgb(128, 203, 196);
+    border-color: rgb(128, 203, 196);
+    color: white;
+    margin: 20px auto; 
+}
+
+.btn-custom:hover, .btn-custom:focus, .btn-custom:active {
+    background-color: rgb(102, 163, 157); 
+    border-color: rgb(102, 163, 157);
+    color: white;
+}
+
+.reserve-info a {
+    color: rgb(128, 203, 196);
+    text-decoration: none; 
+}
+
+.reserve-info a:hover {
+    color: rgb(102, 163, 157); /* przyciemniony kolor podczas hover */
+    text-decoration: underline; 
+}
+
+.reserve-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.reserve-carousel {
+    flex: 1; 
+    width: 100%;
+    max-width: 1000px;
+}
+
+.reserve-title {
+    max-width: 800px;
+    text-align: center;
+    margin: 20px auto;
+    font-size: 2rem;
+    color: #333;
+}
+
+.reserve-info {
+    text-align: left; 
+    margin: 10px auto; 
+    line-height: 1.5;
+    max-width: 800px;
+}
+
+.reserve-info p {
+    margin-bottom: 10px;
+}
