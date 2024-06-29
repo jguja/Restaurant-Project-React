@@ -3,6 +3,7 @@ import '../webLayout/Styles/cart.css';
 import { FiX } from 'react-icons/fi';
 import PaymentModal from './paymentModal';
 
+// rendering a single cart item
 const CartItem = ({ meal, onRemove, onQuantityChange }) => {
     const handleQuantityChange = (e) => {
         const newQuantity = parseInt(e.target.value, 10);
@@ -26,13 +27,14 @@ const CartItem = ({ meal, onRemove, onQuantityChange }) => {
                 />
             </div>
             <div className="item-price">${(meal.price * meal.quantity).toFixed(2)}</div>
-            <div className="item-remove" onClick={() => onRemove(meal.id)}>
+            <div className="item-remove" onClick={() => onRemove(meal.id)}> {/* onRemove is a function called when the button is clicked */}
                 <FiX />
             </div>
         </div>
     );
 };
 
+// this component renders the entire shopping cart
 const Cart = ({ selectedMeals, totalAmount, onRemove, onQuantityChange }) => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -80,7 +82,7 @@ const Cart = ({ selectedMeals, totalAmount, onRemove, onQuantityChange }) => {
                     <PaymentModal
                     onClose={() => {
                         closePaymentModal();
-                        clearSelectedMeals(); // usuwanie dañ po zap³acie
+                        clearSelectedMeals(); // removing meals after payment
                     }}
                     selectedMeals={selectedMeals}
                 />

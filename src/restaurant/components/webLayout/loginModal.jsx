@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import '../webLayout/Styles/loginModal.css';
 
 const LoginModal = ({ onClose ,handleLoginSuccess}) => {
-    // State for email input
+    //state for email input
     const [email, setEmail] = useState('');
-    // State for password input
+    //state for password input
     const [password, setPassword] = useState('');
-    // State for displaying notification message
+    //state for notification message
     const [notification, setNotification] = useState('');
 
-    // Function to handle form submission
+    //function to handle form submission
     const handleLogin = (e) => {
         e.preventDefault();
 
-        // Check if email and password are correct
+        //check if email and password are correct
         if (email === 'exp@pl.com' && password === '1234') {
             // Successful login        
           
@@ -21,9 +21,9 @@ const LoginModal = ({ onClose ,handleLoginSuccess}) => {
             setNotification('Successful login');
             onClose();
         } else {
-            // Incorrect login credentials
+            //incorrect login
             setNotification('Incorrect email or password');
-            // Clear email and password fields
+            //clear email and password fields
             setEmail('');
             setPassword('');
         }

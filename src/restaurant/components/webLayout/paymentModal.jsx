@@ -1,113 +1,57 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { FiX } from 'react-icons/fi';
-import { FaMoneyBillWave, FaCreditCard, FaPaypal } from 'react-icons/fa'; 
-
-const ModalWrapper = styled.div`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    z-index: 1000;
-`;
-
-const ModalHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-`;
-
-const ModalTitle = styled.h4`
-    margin: 0;
-    font-size: 1.2rem;
-`;
-
-const PaymentOptions = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 20px;
-`;
-
-const PaymentOption = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-`;
-
-const PaymentOptionLabel = styled.span`
-    margin-top: 5px;
-`;
-
-const ModalButton = styled.button`
-    padding: 10px 20px;
-    margin-right: 10px;
-    background-color: ${({ disabled }) => (disabled ? '#ccc' : 'rgb(128, 203, 196)')};
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: ${({ disabled }) => (disabled ? '#ccc' : 'rgb(102, 163, 157)')};
-    }
-`;
+import { FaMoneyBillWave, FaCreditCard, FaPaypal } from 'react-icons/fa';
+import '../webLayout/Styles/paymentModal.css';
 
 const PaymentModal = ({ onClose, selectedMeals, updateSelectedMeals }) => {
-    const [paymentMethod, setPaymentMethod] = useState('');
-    const [paymentReceived, setPaymentReceived] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState(''); // State to hold the currently selected payment method
+    const [paymentReceived, setPaymentReceived] = useState(false); // State to determine if payment has been received
 
+    // Function to handle the payment process
     const handlePayment = () => {
         if (paymentMethod) {
-            setPaymentReceived(true);
+            setPaymentReceived(true); // Simulate payment received
         }
     };
 
     return (
-        <ModalWrapper>
-            <ModalHeader>
-                <ModalTitle>Choose Payment Method</ModalTitle>
-                <FiX onClick={onClose} />
-            </ModalHeader>
-            <PaymentOptions>
-                <PaymentOption onClick={() => setPaymentMethod('cash')}>
+        <div className="modal-wrapper">
+            <div className="modal-header">
+                <h4 className="modal-title">Choose Payment Method</h4>
+                <FiX onClick={onClose} /> {/* modal close button */}
+            </div>
+            <div className="payment-options">
+                <div className="payment-option" onClick={() => setPaymentMethod('cash')}>
                     <FaMoneyBillWave size={40} />
-                    <PaymentOptionLabel>Cash</PaymentOptionLabel>
-                </PaymentOption>
-                <PaymentOption onClick={() => setPaymentMethod('creditCard')}>
+                    <span className="payment-option-label">Cash</span>
+                </div>
+                <div className="payment-option" onClick={() => setPaymentMethod('creditCard')}>
                     <FaCreditCard size={40} />
-                    <PaymentOptionLabel>Credit Card</PaymentOptionLabel>
-                </PaymentOption>
-                <PaymentOption onClick={() => setPaymentMethod('paypal')}>
+                    <span className="payment-option-label">Credit Card</span>
+                </div>
+                <div className="payment-option" onClick={() => setPaymentMethod('paypal')}>
                     <FaPaypal size={40} />
-                    <PaymentOptionLabel>PayPal</PaymentOptionLabel>
-                </PaymentOption>
-            </PaymentOptions>
+                    <span className="payment-option-label">PayPal</span>
+                </div>
+            </div>
             {paymentReceived ? (
                 <div>
                     <p>Payment Received!</p>
-                    <ModalButton onClick={onClose} disabled={!paymentMethod}>
-                    Close
-                </ModalButton>
+                    <button className="modal-button" onClick={onClose} disabled={!paymentMethod}>
+                        Close
+                    </button>
                 </div>
             ) : (
                 <div>
-                <ModalButton onClick={handlePayment} disabled={!paymentMethod}>
-                    Pay
-                </ModalButton>
-                <ModalButton onClick={onClose} disabled={!paymentMethod}>
-                    Close
-                </ModalButton>
-            </div>
+                    <button className="modal-button" onClick={handlePayment} disabled={!paymentMethod}>
+                        Pay
+                    </button>
+                    <button className="modal-button" onClick={onClose} disabled={!paymentMethod}>
+                        Close
+                    </button>
+                </div>
             )}
-        </ModalWrapper>
+        </div>
     );
 };
 

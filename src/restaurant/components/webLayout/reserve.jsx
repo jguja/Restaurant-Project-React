@@ -2,13 +2,39 @@ import React, { useState } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { ExampleCarouselImage } from '../ExampleCarouselImage';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import '../webLayout/Styles/reserve.css';
 
-export function Reserve() {
-    const [show, setShow] = useState(false);
+// validation schema for the form
+const schema = yup.object().shape({
+    name: yup.string().min(3, 'Name must be at least 3 characters long').required('Name is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    date: yup.date().min(new Date(), 'Reservation date cannot be in the past').required('Date is required'),
+    time: yup.string().required('Time is required'),
+    partySize: yup.number().min(1, 'Party size must be at least 1').max(8, 'Party size must be at most 8').required('Party size is required'),
+});
+export function Reserve() { 
+    const [show, setShow] = useState(false); // state controlling the visibility of the modal
 
+    // initialize useForm with yupResolver and validation schema
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema)
+    });
+
+    // function to close the modal
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // function to open the modal and reset the form
+    const handleShow = () => {
+        setShow(true);
+        reset();
+    };
+
+    const onSubmit = (data) => {
+        console.log('Form submitted successfully', data);
+        setShow(false);
+    };
 
     return (
         <div className="reserve-container" id="outer-container">
@@ -39,30 +65,70 @@ export function Reserve() {
                     <Modal.Title>Reservations</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group controlId="formName">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter your name" />
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter your name"
+                                {...register('name')} //method register provided by react-hook
+                                isInvalid={!!errors.name}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.name?.message}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="formEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter your email" />
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter your email"
+                                {...register('email')}
+                                isInvalid={!!errors.email}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.email?.message}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="formDate">
                             <Form.Label>Reservation Date</Form.Label>
-                            <Form.Control type="date" />
+                            <Form.Control
+                                type="date"
+                                {...register('date')}
+                                isInvalid={!!errors.date}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.date?.message}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="formTime">
                             <Form.Label>Reservation Time</Form.Label>
-                            <Form.Control type="time" />
+                            <Form.Control
+                                type="time"
+                                {...register('time')}
+                                isInvalid={!!errors.time}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.time?.message}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="formPartySize">
                             <Form.Label>Table Size</Form.Label>
-                            <Form.Control type="number" placeholder="Number of guests" min="1" max="8" />
+                            <Form.Control
+                                type="number"
+                                placeholder="Number of guests"
+                                min="1"
+                                max="8"
+                                {...register('partySize')}
+                                isInvalid={!!errors.partySize}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.partySize?.message}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Button className="btn-custom" type="submit">

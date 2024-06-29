@@ -17,7 +17,7 @@
 }
 
 .reserve-info a:hover {
-    color: rgb(102, 163, 157); /* przyciemniony kolor podczas hover */
+    color: rgb(102, 163, 157); /* darkened color on hover */
     text-decoration: underline; 
 }
 

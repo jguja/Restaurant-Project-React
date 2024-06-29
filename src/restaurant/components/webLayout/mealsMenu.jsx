@@ -96,16 +96,16 @@ const mealsData = {
 };
 
 const MealsMenu = ({ handleSelectMeal,handleMealInventory }) => {
-    const [activeCategory, setActiveCategory] = useState('mains');
+    const [activeCategory, setActiveCategory] = useState('mains'); // useState to manage the currently selected meal category, default is mains
     handleMealInventory(mealsData);
-    const categories = Object.keys(mealsData);
+    const categories = Object.keys(mealsData); //fetches all object keys as an array, to generate category buttons
 
     return (
-        <div style={containerStyle}>
+        <div className="container">
             <div className="meals-menu">
                 <h2>Menu</h2>
                 <p>Our kitchen is rooted in an appreciation for exceptional homegrown ingredients, thoughtful-yet-simple preparations, and a passion for breathing new life into Old World recipes. Desserts borrow from treasured family recipes extending back four generations. In addition to the menus listed here, we offer a selection of daily specials.</p>
-
+                
                 <div className="category-tabs">
                     {categories.map(category => (
                         <button
@@ -114,39 +114,25 @@ const MealsMenu = ({ handleSelectMeal,handleMealInventory }) => {
                             onClick={() => setActiveCategory(category)}
                         >
                             {category.charAt(0).toUpperCase() + category.slice(1)}
-                        </button>
+                        </button> // using map method on categories array to generate a button for each category
                     ))}
                 </div>
-
+                {/* Displaying meals */}
                 <div className="meals-grid">
                     {mealsData[activeCategory].map((meal) => (
-                        <div key={meal.id} className="meal-card" onClick={() => handleSelectMeal(meal)}>
+                        <div key={meal.id} className="meal-card" onClick={() => handleSelectMeal(meal)}> {/* adding selected meal to the cart */}
                             <img src={meal.image} alt={meal.name} className="meal-image" />
                             <div className="meal-info">
                                 <h3>{meal.name}</h3>
                                 <p>{meal.description}</p>
                                 <div className="meal-price">${meal.price.toFixed(2)}</div>
                             </div>
-                        </div>
-                    ))}
+                        </div>// maps through meals in the active category and renders each meal card
+                    ))} 
                 </div>
             </div>
         </div>
     );
-};
-
-const containerStyle = {
-    textAlign: 'center',
-    maxWidth: '45rem',
-    width: '90%',
-    margin: 'auto',
-    marginTop: '1rem',
-    position: 'relative',
-    backgroundColor: 'white',
-    color: '#333',
-    borderRadius: '14px',
-    padding: '1rem',
-    boxShadow: '0 1px 18px 10px rgba(0, 0, 0, 0.25)'
 };
 
 export default MealsMenu;

@@ -17,22 +17,25 @@ import { FiX } from 'react-icons/fi';
 //import { MenuManagement }  from './restaurant/components/webLayout/admin/menuManagement'; 
 
 function App() {
+    // State hooks
     const [selectedMeals, setSelectedMeals] = useState([]);
     const [mealsDataSt, setmealsDataS] = useState([]);
     const [notification, setNotification] = useState(null);
     const [cartVisible, setCartVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [userXD, setUserXD] = useState(null);   
+    const [userXD, setUserXD] = useState(null); 
+
+    // Handling adding meals to the cart
     const handleSelectMeal = (mealToAdd) => {
         const existingMealIndex = selectedMeals.findIndex(meal => meal.id === mealToAdd.id);
 
         if (existingMealIndex !== -1) {
-            // Meal already exists, update its quantity
+            // If the meal is already in the cart, increase its quantity
             const updatedMeals = [...selectedMeals];
             updatedMeals[existingMealIndex].quantity += 1;
             setSelectedMeals(updatedMeals);
         } else {
-            // Meal doesn't exist, add it to the selected meals array
+            // If not, add a new meal to the cart with quantity 1
             setSelectedMeals(prevMeals => [...prevMeals, { ...mealToAdd, quantity: 1 }]);
         }
 
@@ -53,6 +56,7 @@ function App() {
         setSelectedMeals((prevMeals) => prevMeals.filter(meal => meal.id !== id));
     };
 
+    // Changing the quantity of a meal
     const handleQuantityChange = (id, newQuantity) => {
         setSelectedMeals((prevMeals) =>
             prevMeals.map(meal =>
@@ -61,15 +65,12 @@ function App() {
         );
     };
 
+    // Setting meal data
     const handleMealInventory =(mealdata) =>{
         setmealsDataS(mealdata);
     }
 
-   
-    
-
- 
-
+    // Calculating the total amount of the order
     const totalAmount = selectedMeals.reduce((acc, meal) => acc + meal.price * meal.quantity, 0);
 
     return (

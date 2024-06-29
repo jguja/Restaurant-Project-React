@@ -1,80 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const InputSideWrapper = styled.form`
-  height: auto;
-  padding-bottom: 100px;
-  position: relative;
-  padding: 10px 10px 100px 10px;
-  width: inherit;
-`;
-
-const InputWrapper = styled.div`
-  border: 2px solid transparent;
-  width: 90%;
-  padding-left: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  color: #333;
-  width: 100%;
-  font-size: 15px;
-  padding: 8px;
-  border-bottom: 1px solid rgb(100, 21, 173);
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-top: 1px solid transparent;
-  outline: 0px transparent !important;
-`;
-
-const MessageInput = styled.textarea`
-  width: 100%;
-  color: #333;
-  font-size: 15px;
-  padding: 10px;
-  border-bottom: 1px solid rgb(100, 21, 173);
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-top: 1px solid transparent;
-  outline: 0px transparent !important;
-`;
-
-const SubMitButton = styled.input`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px;
-  background-color: rgb(128, 203, 196);
-  color: rgb(4, 4, 34);
-  border: none;
-  border-radius: 5px;
-  padding: 12px 25px 12px 24px;
-  cursor: pointer;
-`;
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import '../webLayout/Styles/inputSide.css';
 
 const InputSide = () => {
+    // Define the validation schema for the form
+    const schema = yup.object().shape({
+        name: yup.string().required('Name is required').min(3, 'Name must be at least 3 characters'),
+        email: yup.string().required('Email is required').email('Invalid email format'),
+        phone: yup.string().required('Phone number is required').matches(/^\+?\d{10,14}$/, 'Invalid phone number'),
+        message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+    });
+
+    // Use the useForm hook with the yupResolver, which uses our validation schema
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema)
+    });
+
+    // Handle form submission logic
+    const onSubmit = (data) => {
+        console.log(data); // Display form data in the console (you can add logic to send the data to the server)
+        reset(); // Reset the form after submission
+    };
+
     return (
-        <InputSideWrapper>
-            <InputWrapper>
+        <form className="input-side-wrapper" onSubmit={handleSubmit(onSubmit)}>
+            <div className="input-wrapper">
                 <p>Name</p>
-                <Input type="text" placeholder="John Smith" />
-            </InputWrapper>
-            <InputWrapper>
+                 {/* Use register to register the form field and pass its ref */}
+                <input className="input" type="text" placeholder="John Smith" {...register('name')} />
+                {/* Display an error message if the field does not meet the requirements */}
+                {errors.name && <p className="error-message">{errors.name.message}</p>}
+            </div>
+            <div className="input-wrapper">
                 <p>Email</p>
-                <Input type="email" placeholder="johnsmith@gmail.com" />
-            </InputWrapper>
-            <InputWrapper>
+                <input className="input" type="email" placeholder="johnsmith@gmail.com" {...register('email')} />
+                {errors.email && <p className="error-message">{errors.email.message}</p>}
+            </div>
+            <div className="input-wrapper">
                 <p>Phone</p>
-                <Input type="number" placeholder="+48789789789" />
-            </InputWrapper>
-            <InputWrapper>
+                <input className="input" type="text" placeholder="+48789789789" {...register('phone')} />
+                {errors.phone && <p className="error-message">{errors.phone.message}</p>}
+            </div>
+            <div className="input-wrapper">
                 <p>Message</p>
-                <MessageInput placeholder="Write your message" />
-            </InputWrapper>
-            <SubMitButton type="submit" value="Send Message" />
-        </InputSideWrapper>
+                <textarea className="message-input" placeholder="Write your message" {...register('message')}></textarea>
+                {errors.message && <p className="error-message">{errors.message.message}</p>}
+            </div>
+            <input className="submit-button" type="submit" value="Send Message" />
+        </form>
     );
 };
 
